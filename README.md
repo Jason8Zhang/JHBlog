@@ -1,10 +1,8 @@
 # JHBlog
  
-iOS开发：我的初级到中级的晋级之路
-
  
 *********************************************************
-## iOS高级进发
+## iOS文档
 [OC源码下载地址](https://opensource.apple.com/tarballs/)
 
 [苹果开发文档](https://developer.apple.com/documentation/)
@@ -15,6 +13,9 @@ iOS开发：我的初级到中级的晋级之路
 GNUstep是GNU计划的项目之一，它将Cocoa的OC库重新开源实现了一遍
 源码地址：http://www.gnustep.org/resources/downloads.php
 虽然GNUstep不是苹果官方源码，但还是具有一定的参考价值
+
+
+[iOS知识点](https://www.processon.com/view/link/5e69f598e4b07fc7a6845da5#outline)
 
 
 ******************************************************************************************************************
@@ -58,14 +59,34 @@ GNUstep是GNU计划的项目之一，它将Cocoa的OC库重新开源实现了一
     - [10.8、dealloc原理](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/内存管理/8、dealoc原理.md)
     - [10.9、引用计数的存储](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/内存管理/9、引用计数的存储.md)
   
-    
-    
-******************************************************************************************************************
+ 
+ 
+  
+ 
+
+***************************************************************************
+
+### UI组件以及内部实现
+
+- 1、[UIButton](https://www.yuque.com/docs/share/0dc26d95-a81e-45d1-8d03-7352705fa21e)
+ 
+- 2、[UILabel绘制以及性能优化](https://www.yuque.com/docs/share/a33d9b36-46c1-479a-9235-973c43cbcd4d)
+ 
+- 3、[UIImageView]()
+    - [iOS 中图片的解压缩到渲染过程](https://www.yuque.com/docs/share/2d1034dd-b3ff-47a6-8c6f-e17e18990e87)
+    - [iOS 图像优化](https://www.yuque.com/docs/share/f521b21d-6324-456e-acd8-5efb591fb7ec)
+    - [同时下载多张图片，下载完成后合成一张图片](https://www.yuque.com/docs/share/5011fd3e-51c5-4cb7-b12e-a1b9396cb6cf)
+    - [讲如何将一张内存极大的图片可以像地图一样的加载出来](https://www.yuque.com/docs/share/3f75ca6f-9460-4693-ac41-20db784cb580)
+ 
+
+
+***************************************************************************
 
 
 ### iOS大杂烩
 
 - 1、[LLDB使用](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS大杂烩/LLDB/LLDB.md)
+    - [如何快速列出App的所有+load方法](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS大杂烩/LLDB/如何快速列出App的所有%2Bload方法/如何快速列出App的所有%2Bload方法.md)
 - 2、[基本数据类型](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS大杂烩/打印各种数据类型.md)
 - 3、[App信息监控](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS大杂烩/App需要监控信息.md)
 - 4、[Crash系列]()
@@ -100,9 +121,15 @@ GNUstep是GNU计划的项目之一，它将Cocoa的OC库重新开源实现了一
 - 25、[配置.gitignore忽略文件](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS大杂烩/忽略文件/iOS%20配置.gitignore忽略文件.md)
 - 26、[git使用](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS大杂烩/git使用/git使用.md)
 - 27、[iOS内购](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS大杂烩/iOS内购.md)
-  
 - 28、[NSArray原理及遍历方法探究](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS大杂烩/NSArray原理及遍历方法探究.md)
-  
+- 30、[UIResponder](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS大杂烩/事件响应机制/事件响应机制.md)
+- 31、[UIControl](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS大杂烩/UIControl/UIControl.md)
+- 32、[什么是离屏渲染](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS大杂烩/什么是离屏渲染/什么是离屏渲染.md)
+- 33、[Universal Link 前端部署采坑记](https://awhisper.github.io/2017/09/02/universallink/)
+
+
+
+
   ******************************************************************************************************************
   ## 架构
   - [1、浅谈MVC&变异MVC&MVP&MVVM](https://github.com/SunshineBrother/JHBlog/blob/master/设计模式/基础架构/1、MVC%26变异MVC%26MVP%26MVVM.md)
@@ -218,7 +245,8 @@ GNUstep是GNU计划的项目之一，它将Cocoa的OC库重新开源实现了一
 - 10、[免费API](https://www.apishop.net/#/)
     - 10.1、[免费API](https://github.com/SunshineBrother/JHBlog/blob/master/工具/免费API.md)
     - 10.2、[免费API-01](https://github.com/SunshineBrother/JHBlog/blob/master/工具/免费API-01.md)
-    
+- 11、[Mock工具](https://github.com/SunshineBrother/JHBlog/blob/master/工具/Mock.md)
+- 12、[App Store Connect 帮助 中文](https://help.apple.com/app-store-connect/?lang=zh-cn#/dev1b4647c5b)
 
 *********************************************************
 ## 网站
@@ -261,6 +289,12 @@ GNUstep是GNU计划的项目之一，它将Cocoa的OC库重新开源实现了一
 - [互联网公司面试流程&面试技巧](https://www.jianshu.com/p/7dd0280ff36f)
 
 - [技术岗位如何写简历](https://www.paincker.com/how-to-write-a-resume)
+
+- [救救自己，别再这样写简历了｜掘金技术征文](https://juejin.im/post/5ea59d91518825736512f3b8)
+
+- [一二线城市知名IT互联网公司名单、大厂职级薪酬了解一下](https://mp.weixin.qq.com/s/NEyKE1Q56_55XRzAtO2wug)
+
+
 
 *********************************************************
 ## 图片
