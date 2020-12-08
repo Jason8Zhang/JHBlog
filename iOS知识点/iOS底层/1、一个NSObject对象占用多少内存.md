@@ -2,7 +2,7 @@
 
 我们平时所编写的Object-C代码，底层实现都是C/C++代码，
 
-![Object-C代码底层实现](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/images/Object-C代码底层实现.png)
+![Object-C代码底层实现](../images/Object-C代码底层实现.png)
 
 所以OC的面向对象都是基于C/C++的数据结构实现的
 
@@ -93,7 +93,7 @@ NSLog(@"%zd", malloc_size((__bridge const void *)obj));
 打印结果
 
 
-![NSObject对象内存](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/images/NSObject对象内存.png)
+![NSObject对象内存](../images/NSObject对象内存.png)
 
 ### 一个OC对象在内存中是怎么样布局的呢
 
@@ -112,16 +112,16 @@ struct NSObject_IMPL {
 ```
 我们知道一个指针是`8个字节`，但是NSObject对象打印`16个字节`,他们是怎么样布局的呢
 
-![NSObject对象内存地址](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/images/NSObject对象内存地址.png)
+![NSObject对象内存地址](../images/NSObject对象内存地址.png)
 
 我们可以根据内存地址实时查看内存分配情况`Debug -> Debug Workfllow -> View Memory （Shift + Command + M）`
 
-![查看内存数据](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/images/查看内存数据.png)
+![查看内存数据](../images/查看内存数据.png)
 
-![查看内存数据1](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/images/查看内存数据1.png)
+![查看内存数据1](../images/查看内存数据1.png)
 
 
-![查看内存数据2](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/images/查看内存数据2.png)
+![查看内存数据2](../images/查看内存数据2.png)
 
 
 我们也可以直接使用 `LLDB命令`来查看内存地址
@@ -136,7 +136,7 @@ struct NSObject_IMPL {
 - 修改内存中的值（memory  write  内存地址  数值   memory  write  0x0000010  10）
 
 
-**问题1**：假设我创建一个`Studeng`类，里面有`age`,`number`两个属性，那么他的内存是多大呢？
+**问题1**：假设我创建一个`Student`类，里面有`age`,`number`两个属性，那么他的内存是多大呢？
 
 ```
 Student *stu = [[Student alloc]init];
@@ -158,14 +158,14 @@ struct Student_IMPL {
 猜16字节的猜对了，我们先看看结果
 
 
-![Student内存打印](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/images/Student内存打印.png)
+![Student内存打印](../images/Student内存打印.png)
 
 我们用`LLDB命令`打印一下
 ```
 a9 11 00 00 01 80 1d 00 04 00 00 00 05 00 00 00
 ```
 
- 为什么会是`04 00 00 00`和`05 00 00 00`呢，而不是`00 00 00 04`和`00 00 00 o5`,这个就要考虑[大端小端](https://baike.baidu.com/item/大小端模式/6750542?fromtitle=大端小端&fromid=15925891&fr=aladdin)，具体概念自己可以去查。
+ 为什么会是`04 00 00 00`和`05 00 00 00`呢，而不是`00 00 00 04`和`00 00 00 05`,这个就要考虑[大端小端](https://baike.baidu.com/item/大小端模式/6750542?fromtitle=大端小端&fromid=15925891&fr=aladdin)，具体概念自己可以去查。
 
 
 但是为什么会是16个字节呢，因为int类型占用4个字节，两个int类型8个字节，一个`isa`8个字节，因为刚刚占满16个字节，对象就没有在开辟新的空间了
@@ -173,7 +173,7 @@ a9 11 00 00 01 80 1d 00 04 00 00 00 05 00 00 00
 
 如果在多一个`height`会占用几个字节呢
 
-![Student内存打印2](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/images/Student内存打印2.png)
+![Student内存打印2](../images/Student内存打印2.png)
 
 
 `占用32个字节，大家是不是很惊讶，没有猜到`
@@ -205,7 +205,7 @@ a9 11 00 00 01 80 1d 00 04 00 00 00 05 00 00 00
 ```
 `Student`继承自`Person`
 
-![Student内存打印](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/images/Student内存打印2.png)
+![Student内存打印](../images/Student内存打印2.png)
 
 我们生成C++代码
 ```
