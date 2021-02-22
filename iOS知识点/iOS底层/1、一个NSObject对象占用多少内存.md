@@ -1,5 +1,16 @@
  ## 一个NSObject对象占用多少内存
 
+ ``` objective-c
+  // 本文涉及的命令
+
+   clang -rewrite-objc main.m 
+
+   xcrun  -sdk  iphoneos  clang  -arch  arm64  -rewrite-objc mian.m
+   // xcrun  -sdk  iphoneos  clang  -arch  arm64  -rewrite-objc OC源文件  -o  输出的CPP文件
+   // 如果需要链接其他框架，使用-framework参数。比如-framework UIKit
+
+ ```
+
 我们平时所编写的Object-C代码，底层实现都是C/C++代码，
 
 ![Object-C代码底层实现](../images/Object-C代码底层实现.png)
@@ -29,7 +40,7 @@ xcrun  -sdk  iphoneos  clang  -arch  arm64  -rewrite-objc OC源文件  -o  输�
 如果需要链接其他框架，使用-framework参数。比如-framework UIKit
 ```
 在终端输入命令以后，我们会生成一个`main.cpp`文件，打开`main.cpp`文件文件，我们把`main.cpp`文件拉到最下面，我们会看到这样一段代码
-```
+```objective-c
 int main(int argc, const char * argv[]) {
 /* @autoreleasepool */ { __AtAutoreleasePool __autoreleasepool; 
 
@@ -39,7 +50,7 @@ int main(int argc, const char * argv[]) {
 }
 ```
 这一段代码就是我们OC代码中的`mian`函数的实现
-```
+```objective-c
 int main(int argc, const char * argv[]) {
 	@autoreleasepool {
 
@@ -50,18 +61,18 @@ int main(int argc, const char * argv[]) {
 ```
 
 这时我们在`mian`函数写入这一段代码，然后我们点击进入，查看代码实现
-```
+```objective-c
 NSObject *obj = [[NSObject alloc] init];
 ```
 点击`NSObject`进入内部，可以看到NSObject底层实现
-```
+```objective-c
 struct NSObject {
 	Class isa;  
 };
 ```
 我们用`NSObject_IMPL`查找在c++文件中具体的实现
 
-```
+```objective-c
 struct NSObject_IMPL {
 	Class isa;
 };
@@ -69,11 +80,11 @@ struct NSObject_IMPL {
 
 
 我们再一次执行命令
-```
+```objective-c
 xcrun  -sdk  iphoneos  clang  -arch  arm64  -rewrite-objc mian.m
 ```
 生成的C++代码为
-```
+```objective-c
 int main(int argc, const char * argv[]) {
 	/* @autoreleasepool */ { __AtAutoreleasePool __autoreleasepool; 
 	NSObject *obj = ((NSObject *(*)(id, SEL))(void *)objc_msgSend)((id)((NSObject *(*)(id, SEL))(void *)objc_msgSend)((id)objc_getClass("NSObject"), sel_registerName("alloc")), sel_registerName("init"));
@@ -83,7 +94,7 @@ int main(int argc, const char * argv[]) {
 }
 ```
 有两个方法可以打印内存大小
-```
+```objective-c
 // 获得NSObject实例对象的成员变量所占用的大小  
 NSLog(@"%zd", class_getInstanceSize([NSObject class]));
 
@@ -233,7 +244,4 @@ struct Student_IMPL {
 	int _age;
 	int _height;
 };
-
 ```
-[参考demo](https://github.com/SunshineBrother/iOSDemo)
-

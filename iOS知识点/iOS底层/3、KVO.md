@@ -7,7 +7,8 @@ KVO是为了监听一个对象的某个属性值是否发生变化。在属性�
 在学习实现原理之前我们首先先了解一下`KVO`常用的有哪些方法
 
 ### KVO常用方法
-```
+
+```objective-c
 /*
 注册监听器
 监听器对象为observer，被监听对象为消息的发送者即方法的调用者在回调函数中会被回传
@@ -46,7 +47,7 @@ context为监听上下文，由add方法回传
 我们创建一个`person`对象，然后在里面添加一个`age`属性，我们就来观察一下`age`属性
 **person对象**
 
-```
+```objective-c
 #import <Foundation/Foundation.h>
 
 @interface Person : NSObject
@@ -54,8 +55,11 @@ context为监听上下文，由add方法回传
 @end
 
 ```
+
 **简单实现**
-```
+
+```objective-c
+
 #import "ViewController.h"
 #import "Person.h"
 @interface ViewController ()
@@ -97,6 +101,7 @@ context为监听上下文，由add方法回传
 }
 
 ```
+
 以上代码就是一个`KVO`的简单实现，但是我们有没有想过他的内部到底是怎样实现的呢，今天我们就来探究一下`KVO`的内部实现原理
 
 ### KVO的内部实现
@@ -104,7 +109,8 @@ context为监听上下文，由add方法回传
 
 我们在给`person1`添加监听之前分别打印`p1,p2`的类信息
 代码实现
-```
+
+```objective-c
 NSLog(@"person1添加KVO监听之前 - %@ %@",
 object_getClass(self.p1),
 object_getClass(self.p2));
@@ -116,10 +122,11 @@ NSKeyValueObservingOptions options = NSKeyValueObservingOptionNew | NSKeyValueOb
 NSLog(@"person1添加KVO监听之后 - %@ %@",
 object_getClass(self.p1),
 object_getClass(self.p2));
+
 ```
 
 打印结果
-![KVO1](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/images/KVO1.png)
+![KVO1](../images/KVO1.png)
 
 我们根据结果看到，在添加KVO观察者之后`p1`的类对象由`Person`变成了`NSKVONotifying_Person`，虽然`p1`的类对象变成了`NSKVONotifying_Person`，但是我们在调用的时候感觉我们的`p1`的类对象还是`Person`，所以，我们可以猜测`KVO`会在运行时动态创建一个新类，将对象的`isa`指向新创建的类，`新类是原类的子类`，命名规则是`NSKVONotifying_xxx`的格式。KVO为了使其更像之前的类，还会将对象的`class实例方法重写`，使其更像原类
 
@@ -129,7 +136,7 @@ object_getClass(self.p2));
 我们在发现`p1`的类对象由`Person`变成了`NSKVONotifying_Person`，那我们也随便打印一下`Person`和`NSKVONotifying_Person`内部方法都变成了什么
 
 打印一下方法名
-```
+``` objective-c
 - (void)printMethodNamesOfClass:(Class)cls
 {
 	unsigned int count;
@@ -159,7 +166,7 @@ NSLog(@"%@ %@", cls, methodNames);
 ```
 
 然后我们分别在KVO监听前后在分别打印一下`p1`的类对象
-```
+```objective-c
 NSLog(@"person1添加KVO监听之前的内部方法===");
 [self printMethodNamesOfClass:object_getClass(self.p1)];
 // 给person1对象添加KVO监听
@@ -171,7 +178,7 @@ NSLog(@"person1添加KVO监听之后的内部方法===");
 
 打印结果
 
-![KVO2](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/images/KVO2.png)
+![KVO2](../images/KVO2.png)
  
 我们在来打印一些KVO监听前后`setAge`方法发生了什么改变，因为值得改变肯定是因为`set`方法导致的，所以我们打印一下`setAge`方法。`methodForSelector`可以打印方法地址，我们分别在KVO监听前后打印
 
@@ -196,16 +203,16 @@ NSLog(@"person1添加KVO监听之后 - %p %p",
 ```
 我们可以利用lldb分别看一下具体的方法实现：
 
-![KVO5](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/images/KVO5.png)
+![KVO5](../images/KVO5.png)
 
 
 根据以上总结，我们大概猜到在使用KVO前后对象的改变了
 **未使用KVO监听的对象**
 
-![KVO3](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/images/KVO3.png)
+![KVO3](../images/KVO3.png)
 
 **使用KVO监听的对象**
-![KVO4](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/images/KVO4.png)
+![KVO4](../images/KVO4.png)
 
 
 - 1、重写class方法是为了我们调用它的时候返回跟重写继承类之前同样的内容。KVO底层交换了 NSKVONotifying_Person 的 class 方法，让其返回 Person
@@ -257,7 +264,7 @@ context:(void *)context
 
 ```
 
-![KVO7](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/images/KVO7.png)
+![KVO7](../images/KVO7.png)
 
 根据打印结果我们可以推断`_NSSetLongLongValueAndNotify`内部实现为
 - 1、调用`willChangeValueForKey`方法
@@ -311,9 +318,6 @@ void _NSSetIntValueAndNotify()
 - 不移除会造成内存泄漏
 - 但是多次重复移除会崩溃。系统为了实现KVO，为NSObject添加了一个名为NSKeyValueObserverRegistration的Category，KVO的add和remove的实现都在里面。在移除的时候，系统会判断当前KVO的key是否已经被移除，如果已经被移除，则主动抛出一个NSException的异常
 
-
-
-[参考demo](https://github.com/SunshineBrother/iOSDemo)
 
 
 

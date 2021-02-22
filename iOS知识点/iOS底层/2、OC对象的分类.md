@@ -23,12 +23,12 @@
 
 `元类和类的存储结构是一样的，但是用途不一样`
 
- ![OC对象的分类1](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/images/OC对象的分类1.png)
+ ![OC对象的分类1](../images/OC对象的分类1.png)
 - instance的isa指向class，当调用`对象方法`时，通过instance的isa找到class，最后找到对象方法的实现进行调用
 - class的isa指向meta-class，当调用`类方法`时，通过class的isa找到meta-class，最后找到`类方法`
 
 ### 总览图
- ![OC对象的分类2](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/images/OC对象的分类2.png)
+ ![OC对象的分类2](../images/OC对象的分类2.png)
 
 - 1、instance的`isa`指向class
 - 2、class的`isa`指向meta-class
