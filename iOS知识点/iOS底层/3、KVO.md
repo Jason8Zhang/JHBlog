@@ -237,7 +237,7 @@ context:(void *)context
 在添加KVO监听方法以后`setAge`方法变成了`_NSSetLongLongValueAndNotify`,所以我们可以大概猜测动态监听方法主要就是在这里面实现的
 
 我们可以在终端使用`nm -a /System/Library/Frameworks/Foundation.framework/Versions/C/Foundation | grep ValueAndNotify`命令来查看`NSSet*ValueAndNotify`的类型
-![KVO6](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/images/KVO6.png)
+![KVO6](../images/KVO6.png)
 
 我们可以在`Person`类中重写`willChangeValueForKey`和`didChangeValueForKey`,来猜测一下`_NSSetLongLongValueAndNotify`的内部实现
 

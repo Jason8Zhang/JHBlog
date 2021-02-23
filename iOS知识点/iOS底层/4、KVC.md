@@ -6,7 +6,7 @@ KVC（Key-value coding）键值编码，指iOS的开发中，可以允许开发�
 ### 1、KVC中常见方法
 
 我们随便点击进入`setValue:forKey`方法，我们可以发现里面的方法基本上都是基于`NSObject`的`NSKeyValueCoding`分类写的，所以对于所有继承了NSObject的类型，也就是几乎所有的Objective-C对象都能使用KVC(一些纯Swift类和结构体是不支持KVC的)，下面是KVC最为重要的四个方法
- ![KVC1](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/images/KVC1.png)
+ ![KVC1](../images/KVC1.png)
 
 ```
 - (nullable id)valueForKey:(NSString *)key;                          //直接通过Key来取值
@@ -21,7 +21,7 @@ KVC（Key-value coding）键值编码，指iOS的开发中，可以允许开发�
 //默认返回YES，表示如果没有找到Set<Key>方法的话，会按照_key，_iskey，key，iskey的顺序搜索成员，设置成NO就不这样搜索
 
 - (BOOL)validateValue:(inout id __nullable * __nonnull)ioValue forKey:(NSString *)inKey error:(out NSError **)outError;
-//KVC提供属性值正确性�验证的API，它可以用来检查set的值是否正确、为不正确的值做一个替换值或者拒绝设置新值并返回错误原因。
+//KVC提供属性值正确性验证的API，它可以用来检查set的值是否正确、为不正确的值做一个替换值或者拒绝设置新值并返回错误原因。
 
 - (NSMutableArray *)mutableArrayValueForKey:(NSString *)key;
 //这是集合操作的API，里面还有一系列这样的API，如果属性是一个NSMutableArray，那么可以用这个方法来返回。
@@ -46,7 +46,7 @@ KVC（Key-value coding）键值编码，指iOS的开发中，可以允许开发�
 #### KVO的`setValue:forKey`原理
 
 我们先来一张图片可以直接明了的看清楚实现原理
- ![KVC2](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/images/KVC2.png)
+ ![KVC2](../images/KVC2.png)
 
 - 1、按照`setKey`，`_setKey`的顺序查找`成员方法`，如果找到方法，传递参数，调用方法
 - 2、如果没有找到，查看`accessInstanceVariablesDirectly`的返回值（`accessInstanceVariablesDirectly`的返回值默认是`YES`），
@@ -55,7 +55,7 @@ KVC（Key-value coding）键值编码，指iOS的开发中，可以允许开发�
 
 
 #### KVO的`ValueforKey`原理
- ![KVC3](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/images/KVC3.png)
+ ![KVC3](../images/KVC3.png)
  - 1、按照`getKey,key,isKey,_key`的顺序查找`成员方法`，如果找到直接调用`取值`
  - 2、如果没有找到，查看`accessInstanceVariablesDirectly`的返回值
  - 返回值为YES，按照`_Key,_isKey,Key,isKey`的顺序查找`成员变量`，如果找到，直接`取值`，如果没有找到，调用`setValue:forUndefinedKey:`，抛出异常
@@ -94,7 +94,7 @@ Person *p = [[Person alloc]init];
 [p valueForKey:@"stu.height"]
 ```
 我们运行程序打印结果
- ![KVC4](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/images/KVC4.png)
+ ![KVC4](../images/KVC4.png)
 
 打印结果是`this class is not key value coding-compliant for the key stu.height.`,所以这个方法是不可以的，但是iOS为我们提供了另一个方法`KeyPath`
 ```
@@ -105,7 +105,7 @@ NSLog(@"valueForKey:%@",[p valueForKeyPath:@"stu.height"]);
 NSLog(@"stu.height:%f",p.stu.height);
 ```
 打印结果
- ![KVC5](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/images/KVC5.png)
+ ![KVC5](../images/KVC5.png)
 
 
 `keyPath`除了对当前对象的属性进行赋值外，还可以对其更“深层”的对象进行赋值。KVC进行多级访问时，直接类似于属性调用一样用点语法进行访问即可。
@@ -238,10 +238,6 @@ NSDictionary *dic = @{@"name":@"jack",@"height":@180,@"age":@10};
  
  因为还需要我们手动调用校验，感觉用处不太大。
  
- 
- 
- 
- [参考demo](https://github.com/SunshineBrother/iOSDemo)
  
  
 
