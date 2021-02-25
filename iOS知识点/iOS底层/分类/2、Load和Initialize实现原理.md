@@ -5,21 +5,22 @@
 
 > +load方法会在`runtime`加载`类`、`分类`时调用
 
-> 每个类、分类的+load，在程序运行过程中`只调用一次`
+> 每个类、分类的`+load`，在程序运行过程中`只调用一次`
 
-> +load方法是根据方法`地址`直接调用，并不是经过objc_msgSend函数调用
+> +load方法是根据方法`地址`直接调用，并不是经过`objc_msgSend`函数调用
 
 **调用顺序**
 
-- 1、先调用类的+load
+- 1、先调用类的`+load`
     - 按照编译先后顺序调用（先编译，先调用）
-    - 调用子类的+load之前会先调用父类的+load
-- 2、再调用分类的+load
+    - 调用子类的`+load`之前会先调用父类的`+load`
+- 2、再调用分类的`+load`
     - 按照编译先后顺序调用（先编译，先调用）
 
 
 **objc4源码解读过程**
-objc-os.mm 文件
+`objc-os.mm` 文件
+```c
 - _objc_init
 - load_images
 - prepare_load_methods
@@ -29,10 +30,11 @@ objc-os.mm 文件
 - call_load_methods
     - call_class_loads
     - call_category_loads
-
-
-`_objc_init`方法是RunTime运行的入口
 ```
+
+`_objc_init`方法是`RunTime`运行的入口
+
+```c
 void _objc_init(void)
 {
     static bool initialized = false;
@@ -49,13 +51,15 @@ void _objc_init(void)
     _dyld_objc_notify_register(&map_images, load_images, unmap_image);
 }
 ```
+
 >小知识：`images`是镜像的意思
 
 我们在`_objc_init`方法中找到`load_images`，`load_images`是Load加载镜像的意思，所有我们可以猜测这个里面应该有我们load的加载方法的相关实现
 
 
 我们点击进入`load_images`方法
-```
+
+```c
 load_images(const char *path __unused, const struct mach_header *mh)
 {
     // Return without taking locks if there are no +load methods here.
@@ -73,13 +77,14 @@ load_images(const char *path __unused, const struct mach_header *mh)
     call_load_methods();
 }
 ```
+
 里面有两个需要我们注意的
 - 1、`prepare_load_methods((const headerType *)mh)`准备加载Load方法，我们也可以看到上面的官方文档解释也是这个意思
 - 2、`call_load_methods()` 加载load方法
 
 我们点击进入`prepare_load_methods((const headerType *)mh)`准备加载Load方法
 
-```
+```c
 void prepare_load_methods(const headerType *mhdr)
 {
     size_t count, i;
@@ -112,7 +117,7 @@ void prepare_load_methods(const headerType *mhdr)
 
 我们查看`schedule_class_load(remapClass(classlist[i]));`方法里面还有哪些实现
 
-```
+```c
 static void schedule_class_load(Class cls)
 {
     if (!cls) return;
@@ -127,6 +132,7 @@ static void schedule_class_load(Class cls)
     cls->setInfo(RW_LOADED); 
 }
 ```
+
 - 1、`schedule_class_load(cls->superclass);` 把父类load先添加到数组中
 - 2、`add_class_to_loadable_list(cls);`把自己的load方法添加到数组中
 
@@ -140,7 +146,7 @@ static void schedule_class_load(Class cls)
 
 
 我们点击`add_category_to_loadable_list(cat)`进入查看方法实现
-```
+```c
 void add_category_to_loadable_list(Category cat)
 {
     IMP method;
@@ -177,7 +183,7 @@ void add_category_to_loadable_list(Category cat)
 
 我们刚才看到了类分类中的添加顺序，我们在来看看加载顺序
 点击`call_load_methods();`进入相关实现
-```
+```c
 void call_load_methods(void)
 {
     static bool loading = NO;
@@ -225,12 +231,12 @@ void call_load_methods(void)
 
 
 编译顺序
-![Load1](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/分类/Load1.png)
+![Load1](../分类/Load1.png)
 
   
 打印顺序
 
-![Load2](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/分类/Load2.png)
+![Load2](../分类/Load2.png)
 
 
 - 1、先编译`Teacher`但是最先打印`Person`
@@ -273,7 +279,7 @@ objc-runtime-new.mm
 
 我们在`objc-runtime-new.mm`文件中找到`class_getInstanceMethod`，里面就有一个主要实现方法`lookUpImpOrNil`
 
-```
+```c
 Method class_getInstanceMethod(Class cls, SEL sel)
 {
     if (!cls  ||  !sel) return nil;
@@ -284,8 +290,9 @@ Method class_getInstanceMethod(Class cls, SEL sel)
     return _class_getMethod(cls, sel);
 }
 ```
+
 里面没有什么实现我们继续点击`lookUpImpOrNil`进入实现
-```
+```c
 IMP lookUpImpOrNil(Class cls, SEL sel, id inst, 
 bool initialize, bool cache, bool resolver)
     {
@@ -304,12 +311,12 @@ if (initialize  &&  !cls->isInitialized()) {
 }
 ```
 这个里面有一个`if`判断里面有一些东西，就是在没有实现`isInitialized`的时候，调用`_class_initialize`方法，我们点击进入查看相关实现
-```
+```c
 if (supercls  &&  !supercls->isInitialized()) {
     _class_initialize(supercls);
 }
 ```
-```
+```c
 callInitialize(cls);
 ```
 里面有这两个主要的函数
@@ -319,7 +326,7 @@ callInitialize(cls);
 
 
 我们在点击`callInitialize`发现具体是通过`objc_msgSend`来实现的。
-```
+```c
 void callInitialize(Class cls)
 {
 ((void(*)(Class, SEL))objc_msgSend)(cls, SEL_initialize);
@@ -335,7 +342,7 @@ asm("");
 [Student alloc];
 ```
 
-![initialize](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/分类/initialize.png)
+![initialize](../分类/initialize.png)
 
 结果打印三次`[Person initialize]`方法，打印一次我们是能够想到了，因为实现过程是先看看父类有没有已经实现，如果没有实现就先实现父类的。但是另外两次是怎么来的呢。
 
@@ -356,7 +363,7 @@ objc_msgSend([Student class], @selector(initialize));
 [Person alloc];
 ```
 
-![initialize2](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/分类/initialize2.png)
+![initialize2](../分类/initialize2.png)
 
 这句代码就是证明了`如果分类实现了+initialize，就覆盖类本身的+initialize调用`
 
@@ -368,7 +375,7 @@ objc_msgSend([Student class], @selector(initialize));
 load、initialize方法的区别什么？
 - 1.调用方式
  - 1> load是根据函数地址直接调用
-- 2> initialize是通过objc_msgSend调用
+ - 2> initialize是通过objc_msgSend调用
 
 -2.调用时刻
     - 1> load是runtime加载类、分类的时候调用（只会调用1次）
@@ -387,5 +394,3 @@ load、initialize的调用顺序？
 2.initialize
 - 1> 先初始化父类
 - 2> 再初始化子类（可能最终调用的是父类的initialize方法）
-
-
