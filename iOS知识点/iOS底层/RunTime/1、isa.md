@@ -327,7 +327,7 @@ typedef NS_OPTIONS(NSUInteger, UIViewAutoresizing) {
 
 ### 最后
 
-![isa](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/RunTime/isa.png)
+![isa](./iOS底层/RunTime/isa.png)
 
 最后我们在看一下isa结构吧
 - 1、nonpointer：0，代表普通的指针，存储着Class、Meta-Class对象的内存地址；1，代表优化过，使用位域存储更多的信息

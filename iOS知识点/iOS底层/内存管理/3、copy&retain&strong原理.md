@@ -34,7 +34,7 @@ void test1()
 	NSLog(@"%p %p %p", str1, str2, str3);
 }
 ```
-![copy1](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/内存管理/copy1.png)
+![copy1](./iOS底层/内存管理/copy1.png)
 
 我们根据打印的地址可以看出`不可变字符串在copy时是浅拷贝，只拷贝了指针没有拷贝对象；mutableCopy则是深拷贝，产生了新的对象`
 
@@ -51,7 +51,7 @@ void test2()
 }
 ```
 
-![copy2](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/内存管理/copy2.png)
+![copy2](./iOS底层/内存管理/copy2.png)
 
 我们根据打印的地址可以看出`对于可变字符串不论是copy还是mutableCopy都是深拷贝`
 
@@ -69,7 +69,7 @@ void test3()
 }
 ```
 
-![copy3](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/内存管理/copy3.png)
+![copy3](./iOS底层/内存管理/copy3.png)
 
 
 我们根据打印的地址可以看出`不可变数组在copy时是浅拷贝，只拷贝了指针没有拷贝对象；mutableCopy则是深拷贝，产生了新的对象`
@@ -87,7 +87,7 @@ void test4()
 	NSLog(@"%p %p %p", array1, array2, array3);
 }
 ```
-![copy4](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/内存管理/copy4.png)
+![copy4](./iOS底层/内存管理/copy4.png)
 
 我们根据打印的地址可以看出`对于可变数组不论是copy还是mutableCopy都是深拷贝`
 
@@ -105,7 +105,7 @@ void test5()
 }
 ```
 
-![copy5](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/内存管理/copy5.png)
+![copy5](./iOS底层/内存管理/copy5.png)
 
 我们根据打印的地址可以看出`不可变字典在copy时是浅拷贝，只拷贝了指针没有拷贝对象；mutableCopy则是深拷贝，产生了新的对象`
 
@@ -124,12 +124,12 @@ void test6()
 
 }
 ```
-![copy6](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/内存管理/copy6.png)
+![copy6](./iOS底层/内存管理/copy6.png)
 
 
 根据上面结果我们可以总结出
 
-![copy7](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/内存管理/copy7.png)
+![copy7](./iOS底层/内存管理/copy7.png)
 
 
 **让自己的类用 copy 修饰符**
@@ -190,7 +190,7 @@ self.strCopy,self.strCopy,&_strCopy);
 
 我们打印内存地址和指针地址
 
-![strong](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/内存管理/strong.png)
+![strong](./iOS底层/内存管理/strong.png)
 
 我们修改`str`
 ```
@@ -212,7 +212,7 @@ self.strStrong,self.strStrong,&_strStrong,
 self.strCopy,self.strCopy,&_strCopy);
 ```
 
-![strong1](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/内存管理/strong1.png)
+![strong1](./iOS底层/内存管理/strong1.png)
 
 
 `结论：源对象为不可变字符串而言，不论使用copy还是strong属性，所对应的值是不发生变化，strong和copy并没有开辟新的内存，即并不是深拷贝。此时，使用copy或是strong，并没有对数据产生影响`
@@ -236,7 +236,7 @@ self.strStrong,self.strStrong,&_strStrong,
 self.strCopy,self.strCopy,&_strCopy);
 ```
 
-![strong2](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/内存管理/strong2.png)
+![strong2](./iOS底层/内存管理/strong2.png)
 
 `结论：数据源为可变字符串而言，使用copy申明属性，会开辟一块新的内存空间存放值，源数据不论怎么变化，都不会影响copy属性中的值，属于深拷贝；使用strong申明属性，不会开辟新的内存空间，只会引用到源数据内存地址，因此源数据改变，则strong属性也会改变，属于浅拷贝`
 

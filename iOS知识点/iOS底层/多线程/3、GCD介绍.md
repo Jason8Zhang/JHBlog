@@ -269,7 +269,7 @@ NSLog(@"执行任务4");
 
 NSLog(@"执行任务5");
 ```
-![GCD6](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/多线程/GCD6.png)
+![GCD6](./iOS底层/多线程/GCD6.png)
 
 其中`执行任务3`和`执行任务4`之间造成死锁
 
@@ -330,7 +330,7 @@ NSLog(@"2---%@",[NSThread currentThread]);      // 打印当前线程
 
 #### 5.1、GCD 栅栏方法：`dispatch_barrier_async`
 
-![GCD7](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/多线程/GCD7.png)
+![GCD7](./iOS底层/多线程/GCD7.png)
 
 
 就是我们在异步执行一些操作的时候，我们使用`dispatch_barrier_async`函数把异步操作暂时性的做成同步操作，就行一个`栅栏`一样分开
@@ -366,7 +366,7 @@ NSLog(@"write");
 }
 
 ```
-![GCD8](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/多线程/GCD8.png)
+![GCD8](./iOS底层/多线程/GCD8.png)
 我们观察时间可以看到在执行`dispatch_barrier_async`写操作的时候是同步执行的，不会出现异步情况
 
 #### 5.2、GCD 延时执行方法：dispatch_after

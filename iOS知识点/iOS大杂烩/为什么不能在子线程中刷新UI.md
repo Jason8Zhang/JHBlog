@@ -69,7 +69,7 @@
  
  ### 理解iOS的渲染流程
  
- ![iOS的渲染流程](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS大杂烩/image/iOS的渲染流程.jpeg)
+ ![iOS的渲染流程](./iOS大杂烩/image/iOS的渲染流程.jpeg)
  
 - UIKit: 包含各种控件，负责对用户操作事件的响应，本身并不提供渲染的能力
 - Core Animation: 负责所有视图的绘制、显示与动画效果
@@ -83,7 +83,7 @@
  
  **Core Animation Pipeline 流水线**
  
-  ![CoreAnimation](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS大杂烩/image/CoreAnimation.jpeg)
+  ![CoreAnimation](./iOS大杂烩/image/CoreAnimation.jpeg)
  
  Core Animation的绘制是通过Core Animation Pipeline实现，它以流水线的形式进行渲染，具体分为四个步骤：
  

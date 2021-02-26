@@ -23,12 +23,12 @@ for (unsigned int i = 0; i< count; i++)
 }
 ```
 
-![property](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/内存管理/property.png)
+![property](./iOS底层/内存管理/property.png)
 
 属性信息中`NSString`我们是知道了，但是`T,C,N,V_name`都是什么意思呢。我们查看[官方介绍](https://link.jianshu.com/?t=https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtPropertyIntrospection.html)
 
 
-![property1](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/内存管理/property1.png)
+![property1](./iOS底层/内存管理/property1.png)
 
 ```
 //T@"NSString",C,N,V_name
@@ -54,7 +54,7 @@ free(methods);
 NSLog(@"方法列表:%@",methodList);
 ```
 
-![property2](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/内存管理/property2.png)
+![property2](./iOS底层/内存管理/property2.png)
 
 
 我们并没有写`name`&`setName:`方法，所以这个`get`和`set`方法应该就是runtime生成的。

@@ -188,7 +188,7 @@ union {
 
 
 
-![weak](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/内存管理/weak.png)
+![weak](./iOS底层/内存管理/weak.png)
 
 
 ### 3、释放调用clearDeallocating函数

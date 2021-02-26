@@ -20,7 +20,7 @@ VIPER 可以是视图 (View)，交互器 (Interactor)，展示器 (Presenter)，
 - Routing路由：包含用来描述屏幕显示和显示顺序的导航逻辑。
 
 
- ![VIPER](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS大杂烩/UIViewController/VIPER.png)
+ ![VIPER](./iOS大杂烩/UIViewController/VIPER.png)
 
 
 View不用多说，可以分解成更多的子View，最后合成一个树形结构。

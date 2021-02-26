@@ -21,7 +21,7 @@ git commit -m 'update .gitignore'
 
 这里iOS 项目，使用CocosPods 框架管理工具会生成Podfile、Podfile.lock、Pods文件夹和.xcworkspace四个。其中
 
-![image.png](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS大杂烩/忽略文件/image.png)
+![image.png](./iOS大杂烩/忽略文件/image.png)
 
 
 

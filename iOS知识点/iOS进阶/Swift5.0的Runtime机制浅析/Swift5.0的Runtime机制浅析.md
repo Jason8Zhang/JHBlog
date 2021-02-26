@@ -25,7 +25,7 @@ Swfit中的对象方法调用机制加快了程序的运行速度，同时减少
 
 对于OC语言来说对象方法调用的实现机制有很多文章都进行了深入的介绍。所有OC类中定义的方法函数的实现都隐藏了两个参数：`一个是对象本身，一个是对象方法的名称`。每次对象方法调用都会至少传递对象和对象方法名称作为开始的两个参数，方法的调用过程都会通过一个被称为消息发送的C函数objc_msgSend来完成。objc_msgSend函数是OC对象方法调用的总引擎，这个函数内部会根据第一个参数中对象所保存的类结构信息以及第二个参数中的方法名来找到最终要调用的方法函数的地址并执行函数调用。这也是OC语言Runtime的实现机制，同时也是OC语言对多态的支持实现。整个流程就如下表述
  
-![OC方法调用流程](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS进阶/Swift5.0的Runtime机制浅析/OC方法调用流程.png)
+![OC方法调用流程](./iOS进阶/Swift5.0的Runtime机制浅析/OC方法调用流程.png)
 
 
 
@@ -396,7 +396,7 @@ void main(){
  
 下面这张图就清晰的描述了Swift类的对象方法调用以及类描述信息。
 
-![方法调用和类结构图](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS进阶/Swift5.0的Runtime机制浅析/方法调用和类结构图.png)
+![方法调用和类结构图](./iOS进阶/Swift5.0的Runtime机制浅析/方法调用和类结构图.png)
 
 
 
@@ -495,7 +495,7 @@ void main(){
 
  
 
-![对象内存布局](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS进阶/Swift5.0的Runtime机制浅析/对象内存布局.png)
+![对象内存布局](./iOS进阶/Swift5.0的Runtime机制浅析/对象内存布局.png)
 
 
 ### 结构体中的方法
@@ -621,7 +621,7 @@ void main()
 
 
 
-![OC调用Swift方法实现](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS进阶/Swift5.0的Runtime机制浅析/OC调用Swift方法实现.png)
+![OC调用Swift方法实现](./iOS进阶/Swift5.0的Runtime机制浅析/OC调用Swift方法实现.png)
 
 
 

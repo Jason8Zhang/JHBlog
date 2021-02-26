@@ -104,7 +104,7 @@ CFTypeRef _counterpart;
 
 其中主要的有下面几个
 
-![RunLoop1](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/images/RunLoop1.png)
+![RunLoop1](./images/RunLoop1.png)
 
 - 1、`_pthread`记录当前线程
 - 2、`_commonModes`
@@ -116,7 +116,7 @@ CFTypeRef _counterpart;
 
 
 
-![RunLoop2](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/images/RunLoop2.png)
+![RunLoop2](./images/RunLoop2.png)
 
 - 1、Source0：
     - 处理触摸事件，
@@ -134,13 +134,13 @@ CFTypeRef _counterpart;
 
 我们来简单的证明一下`Source0`,我们随便写一个`touchesBegan`触摸事件，然后在里面打一个断点，`bt`指令就是打印线程执行的所有方法
 
-![RunLoop4](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/images/RunLoop4.png)
+![RunLoop4](./images/RunLoop4.png)
 
 我们可以在线程执行方法中可以发现，在调用RunLoop相关方法的时候，第一个是调用的`__CFRunLoopDoSources0`
 
 RunLoop里面会有多个Mode，但是只有一个`_currentMode`
 
-![RunLoop3](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/images/RunLoop3.png)
+![RunLoop3](./images/RunLoop3.png)
 
 
 
@@ -213,7 +213,7 @@ CFRelease(observer);
 
 我们运行上面代码，然后查看打印结果
 
-![RunLoop6](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/images/RunLoop6.png)
+![RunLoop6](./images/RunLoop6.png)
 
 在没有任何事件处理的情况下，最终RunLoop的活动状态为`kCFRunLoopBeforeWaiting`即将进入休眠
 
@@ -254,7 +254,7 @@ CFRelease(observer);
 ```
 打印结果为
 
-![RunLoop5](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/images/RunLoop5.png)
+![RunLoop5](./images/RunLoop5.png)
 
 - 1、在刚开始滚动`UITextView`的时候，先退出`kCFRunLoopDefaultMode`，所以默认应该就是`kCFRunLoopDefaultMode`
 - 2、在滚动中，进入`UITrackingRunLoopMode`
@@ -264,7 +264,7 @@ CFRelease(observer);
 
 ### RunLoop的运行逻辑
 
-![RunLoop7](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/images/RunLoop7.png)
+![RunLoop7](./images/RunLoop7.png)
 
 
 每次运行RunLoop，线程的RunLoop会自动处理之前未处理的消息，并通知相关的观察者。具体顺序
@@ -288,7 +288,7 @@ CFRelease(observer);
 
 **RunLoop休眠原理**
 
-![RunLoop8](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/images/RunLoop8.png)
+![RunLoop8](./images/RunLoop8.png)
 
 在RunLoop即将休眠的时候，通过`mach_msg()`方法来让软件和硬件交互
 - 1、即将休眠的时候，程序调用`mach_msg()`传递给CPU，告诉CPU停止运行
@@ -311,7 +311,7 @@ NSLog(@"%d",count++);
 ```
 
 
-![RunLoop9](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/images/RunLoop9.png)
+![RunLoop9](./images/RunLoop9.png)
 
 我们观察可以发现在打印的第二秒和第三秒之间其实相差了`5s`，因为一个线程只会有一个RunLoop，默认情况下是`kCFRunLoopDefaultMode`，在滚动`UITextView`的时候，RunLoop切换到了`UITrackingRunLoopMode`,这个时候定时器就会停止，在滚动`UITextView`结束的时候，RunLoop切换到了`kCFRunLoopDefaultMode`，定时器继续开始启动了。
 

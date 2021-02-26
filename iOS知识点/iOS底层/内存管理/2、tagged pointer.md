@@ -5,7 +5,7 @@
 ### 内存布局
 在开始介绍`Tagged Pointer`之前我们先来介绍一下iOS程序的内存布局
 
-![TaggedPointer](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/内存管理/TaggedPointer.png)
+![TaggedPointer](./iOS底层/内存管理/TaggedPointer.png)
 
 - 代码段：编译之后的代码
 - 数据段
@@ -45,7 +45,7 @@ obj = 0x608000012210 // 堆
 */
 ```
 
-![TaggedPointer1](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/内存管理/TaggedPointer1.png)
+![TaggedPointer1](./iOS底层/内存管理/TaggedPointer1.png)
 
 ### Tagged Pointer
 
@@ -55,7 +55,7 @@ obj = 0x608000012210 // 堆
 - 当指针不够存储数据时，才会使用动态分配内存的方式来存储数据
 - `objc_msgSend`能识别`Tagged Pointer`，比如NSNumber的intValue方法，直接从指针提取数据，节省了以前的调用开销
 
-![TaggedPointer3](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/内存管理/TaggedPointer3.png)
+![TaggedPointer3](./iOS底层/内存管理/TaggedPointer3.png)
 
 
 ```
@@ -73,7 +73,7 @@ int main(int argc, const char * argv[]) {
 }
 ```
 
-![TaggedPointer2](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/内存管理/TaggedPointer2.png)
+![TaggedPointer2](./iOS底层/内存管理/TaggedPointer2.png)
 
 在小对象的时候， 使用`Tagged Pointer`，NSNumber指针里面存储的数据变成了：`Tag + Data`，也就是将数据直接存储在了指针中，不在需要存取来获取值了。
 
@@ -110,7 +110,7 @@ dispatch_queue_t queue = dispatch_get_global_queue(0, 0);
 }
 ```
 
-![TaggedPointer4](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/内存管理/TaggedPointer4.png)
+![TaggedPointer4](./iOS底层/内存管理/TaggedPointer4.png)
 
 我们查看打印结果：发现好像是在释放对象`objc_release`的时候发生崩溃的。
 
@@ -149,7 +149,7 @@ NSString *str2 = [NSString stringWithFormat:@"abcdefghijk"];
 NSLog(@"\n[str1 class]=%@\n[str2 class]=%@",[str1 class],[str2 class]);
 ```
 
-![TaggedPointer5](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/内存管理/TaggedPointer5.png)
+![TaggedPointer5](./iOS底层/内存管理/TaggedPointer5.png)
 
 根据打印发现`str1`是`NSTaggedPointerString`类型，是不通过`set`方法找对象的。
 

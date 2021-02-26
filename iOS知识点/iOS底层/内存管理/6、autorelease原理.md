@@ -21,7 +21,7 @@ int main(int argc, const char * argv[]) {
 }
 ```
 打印结果
-![AutoreleasePool](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/内存管理/AutoreleasePool.png)
+![AutoreleasePool](./iOS底层/内存管理/AutoreleasePool.png)
 
 如果使用 autorelease，就需要用到自动缓存池了，代码如下：
 ```
@@ -36,7 +36,7 @@ int main(int argc, const char * argv[]) {
 }
 ```
 打印结果
-![AutoreleasePool1](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/内存管理/AutoreleasePool1.png)
+![AutoreleasePool1](./iOS底层/内存管理/AutoreleasePool1.png)
 
 **AutoreleasePool具体做了什么呢**
 想要查看`AutoreleasePool`具体做了什么，我们首先要看`AutoreleasePool`的实现原理
@@ -137,7 +137,7 @@ class AutoreleasePoolPage
 
 
 
-![AutoreleasePool2](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/内存管理/AutoreleasePool2.png)
+![AutoreleasePool2](./iOS底层/内存管理/AutoreleasePool2.png)
 
 
 **push()函数实现**
@@ -254,7 +254,7 @@ void releaseUntil(id *stop)
 每次 Push 后，都会先添加一个 POOL_BOUNDARY 来占位，是为了对应一次 Pop 的释放，例如图中的 page 就需要两次 Pop 然后完全的释放
 
 
-![AutoreleasePool3](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/内存管理/AutoreleasePool3.png)
+![AutoreleasePool3](./iOS底层/内存管理/AutoreleasePool3.png)
 
 有一个私有变量，我们可以打印线程池内容`extern void _objc_autoreleasePoolPrint(void);`
 
@@ -278,7 +278,7 @@ return 0;
 
 ```
 
-![AutoreleasePool4](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/内存管理/AutoreleasePool4.png)
+![AutoreleasePool4](./iOS底层/内存管理/AutoreleasePool4.png)
 
 
 ### AutoreleasePool 和 Runloop
@@ -304,11 +304,11 @@ NSLog(@"%s", __func__);
 ```
 什么时候打印`Person`的`dealloc`方法以及各个方法的打印顺序。
 
-![AutoreleasePool5](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/内存管理/AutoreleasePool5.png)
+![AutoreleasePool5](./iOS底层/内存管理/AutoreleasePool5.png)
 
 在ARC环境下打印结果为
 
-![AutoreleasePool6](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/内存管理/AutoreleasePool6.png)
+![AutoreleasePool6](./iOS底层/内存管理/AutoreleasePool6.png)
 
 我们可以猜测在ARC环境下，编译器会帮我们做一些操作，就是在`viewDidLoad`结束之前帮我们`release`
 
@@ -323,7 +323,7 @@ NSLog(@"%s",__func__);
  
  我们来探究一下ARC下什么时候`AutoreleasePool`的工作原理。我们打印一下当前RunLoop`[NSRunLoop currentRunLoop]`
 
-![AutoreleasePool7](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/内存管理/AutoreleasePool7.png)
+![AutoreleasePool7](./iOS底层/内存管理/AutoreleasePool7.png)
 
 
 

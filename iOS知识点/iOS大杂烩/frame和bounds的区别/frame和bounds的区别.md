@@ -7,7 +7,7 @@ bounds：该view在本地坐标系统中的位置和大小。（参照点是，�
 
 
 
-![image](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS大杂烩/frame和bounds的区别/image.png)
+![image](./iOS大杂烩/frame和bounds的区别/image.png)
 
 
 **未修改bounds**
@@ -30,7 +30,7 @@ childView.backgroundColor = [UIColor redColor];
 NSLog(@"childView frame:%@========bounds:%@",NSStringFromCGRect(childView.frame),NSStringFromCGRect(childView.bounds));
 ```
 
-![frame1](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS大杂烩/frame和bounds的区别/frame1.png)
+![frame1](./iOS大杂烩/frame和bounds的区别/frame1.png)
 
 
 **修改bounds**
@@ -53,7 +53,7 @@ NSLog(@"childView frame:%@========bounds:%@",NSStringFromCGRect(childView.frame)
 ```
  
 
-![frame2](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS大杂烩/frame和bounds的区别/frame2.png)
+![frame2](./iOS大杂烩/frame和bounds的区别/frame2.png)
 
 
 

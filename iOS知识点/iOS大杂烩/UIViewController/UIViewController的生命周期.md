@@ -1,7 +1,7 @@
 ## UIViewController的生命周期 
  
  
- ![生命周期](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS大杂烩/UIViewController/生命周期.png)
+ ![生命周期](./iOS大杂烩/UIViewController/生命周期.png)
  
  **视图的生命历程**
  
@@ -29,7 +29,7 @@
  
  先看一下 Demo 的文件结构，ViewController 为 A 控制器，TestViewController 为 B 控制器
  
-  ![初始化](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS大杂烩/UIViewController/初始化.png)
+  ![初始化](./iOS大杂烩/UIViewController/初始化.png)
  
  
  我们在`TestViewController`里面实现以下方法
@@ -71,7 +71,7 @@
  
  如果我们不指定 xib 名称，loadView 就会加载与控制器同名的 xib (TestViewController.xib)，最终是这个样子的。
  
-   ![TestViewController](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS大杂烩/UIViewController/TestViewController.png)
+   ![TestViewController](./iOS大杂烩/UIViewController/TestViewController.png)
  
  打印结果
  ```
@@ -98,7 +98,7 @@ reason: '-[UIViewController _loadViewFromNibNamed:bundle:] loaded the "TestView"
 
 这是因为里面有个默认的IBOutlet变量view,看一下后面有没有做关联，如果没有就拉到下面的View和视图做个关联。
 
-![TestView](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS大杂烩/UIViewController/TestView.png)
+![TestView](./iOS大杂烩/UIViewController/TestView.png)
   
  当没有指定 xib 名称，且没有与控制器同名的 xib 时，会加载前缀与控制器名相同而不带 Controller 的 xib (TestView.xib)。 
   
@@ -113,7 +113,7 @@ reason: '-[UIViewController _loadViewFromNibNamed:bundle:] loaded the "TestView"
  ```
  当我们指定了xib的名称，loadView方 法就会去加载对应的 xib (ATestController.xib)，最终是这个样子的。
  
-![ATestController](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS大杂烩/UIViewController/ATestController.png)
+![ATestController](./iOS大杂烩/UIViewController/ATestController.png)
  
  打印结果
  ```
@@ -179,7 +179,7 @@ reason: '-[UIViewController _loadViewFromNibNamed:bundle:] loaded the "TestView"
  
  ### ViewController加载View过程
  
- ![加载View](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS大杂烩/UIViewController/加载View.png)
+ ![加载View](./iOS大杂烩/UIViewController/加载View.png)
  
  从图中可以看到，在 view 加载过程中首先会调用 loadView 方法，在这个方法中主要完成一些关键 view 的初始化工作，比如 UINavigationViewController 和 UITabBarController 等容器类的 ViewController；接下来就是加载 view，加载成功后，会接着调用 viewDidLoad 方法，这里要记住的一点是，在 loadView 之前，是没有 view 的，也就是说，在这之前，view 还没有被初始化。完成 viewDidLoad 方法后，ViewController 里面就成功的加载 view了，如上图右下角所示。
  
@@ -190,7 +190,7 @@ reason: '-[UIViewController _loadViewFromNibNamed:bundle:] loaded the "TestView"
   
   ### ViewController卸载View过程
  
-  ![卸载View](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS大杂烩/UIViewController/卸载View.png)
+  ![卸载View](./iOS大杂烩/UIViewController/卸载View.png)
  
  
  从图中可以看到，当系统发出内存警告时，会调用 didReceiveMemoeryWarning 方法，如果当前有能被释放的 view，系统会调用 viewWillUnload 方法来释放 view，完成后调用 viewDidUnload方法，至此，view 就被卸载了。此时原本指向 view 的变量要被置为 nil，具体操作是在 viewDidUnload 方法中调用 self.myButton = nil。
