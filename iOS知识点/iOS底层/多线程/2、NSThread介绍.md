@@ -1,10 +1,10 @@
  ## NSThread介绍
 
-NSThread 是苹果官方提供的，使用起来比 pthread 更加面向对象，简单易用，可以直接操作线程对象。不过也需要需要程序员自己管理线程的生命周期(主要是创建)，我们在开发的过程中偶尔使用 NSThread。比如我们会经常调用[NSThread currentThread]来显示当前的进程信息
+`NSThread` 是苹果官方提供的，使用起来比 `pthread` 更加面向对象，简单易用，可以直接操作线程对象。不过也需要需要程序员自己管理线程的生命周期(主要是创建)，我们在开发的过程中偶尔使用 `NSThread`。比如我们会经常调用`[NSThread currentThread]`来显示当前的进程信息
 
 #### NSThread的创建与运行
  
- ```
+ ```c
  //使用target对象的selector作为线程的任务执行体，该selector方法最多可以接收一个参数，该参数即为argument
 - (instancetype)initWithTarget:(id)target selector:(SEL)selector object:(nullable id)argument
  
@@ -29,16 +29,16 @@ NSThread 是苹果官方提供的，使用起来比 pthread 更加面向对象�
  ```
 简单运用
 
-```
+```c
 - (void)viewDidLoad {
-[super viewDidLoad];
+    [super viewDidLoad];
 
 
-NSThread *thread = [[NSThread alloc] initWithTarget:self selector:@selector(firstThread:) object:@"Hello, World"];
-//设置线程的名字，方便查看
-[thread setName:@"firstThread"];
-//启动线程
-[thread start];
+    NSThread *thread = [[NSThread alloc] initWithTarget:self selector:@selector(firstThread:) object:@"Hello, World"];
+    //设置线程的名字，方便查看
+    [thread setName:@"firstThread"];
+    //启动线程
+    [thread start];
 
 }
 
@@ -46,16 +46,16 @@ NSThread *thread = [[NSThread alloc] initWithTarget:self selector:@selector(firs
 //线程的任务执行体并接收一个参数arg
 - (void)firstThread:(id)arg
 {
-NSLog(@"Task %@ %@", [NSThread currentThread], arg);
-NSLog(@"Thread Task Complete");
+    NSLog(@"Task %@ %@", [NSThread currentThread], arg);
+    NSLog(@"Thread Task Complete");
 }
 ```
 
-![NSThread1](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/多线程/NSThread1.png)
+![NSThread1](../多线程/NSThread1.png)
 
 
 #### 常见API
-```
+```c
 // 获得主线程
 + (NSThread *)mainThread;    
 
@@ -79,7 +79,7 @@ NSThread *current = [NSThread currentThread];
 
 #### 线程状态控制方法
 
-```
+```c
 // 线程进入就绪状态 -> 运行状态。当线程任务执行完毕，自动进入死亡状态
 - (void)start;
 
@@ -95,9 +95,10 @@ NSThread *current = [NSThread currentThread];
 
 在开发中，我们经常会在子线程进行耗时操作，操作结束后再回到主线程去刷新 UI。这就涉及到了子线程和主线程之间的通信。我们先来了解一下官方关于 NSThread 的线程间通信的方法。
 
-```
+```c
 // 在主线程上执行操作
 - (void)performSelectorOnMainThread:(SEL)aSelector withObject:(id)arg waitUntilDone:(BOOL)wait;
+
 - (void)performSelectorOnMainThread:(SEL)aSelector withObject:(id)arg waitUntilDone:(BOOL)wait modes:(NSArray<NSString *> *)array;
 // equivalent to the first method with kCFRunLoopCommonModes
 
@@ -117,49 +118,13 @@ NSThread *current = [NSThread currentThread];
 
 当我们新建一条线程NSThread *thread = [[NSThread alloc] initWithTarget:self selector:@selector(run) object:nil];，在内存中的表现为：
 
- ![NSThread2](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/多线程/NSThread2.png)
+ ![NSThread2](../多线程/NSThread2.png)
 
 当调用[thread start];后，系统把线程对象放入可调度线程池中，线程对象进入就绪状态，如下图所示。
 
 
- ![NSThread3](https://github.com/SunshineBrother/JHBlog/blob/master/iOS知识点/iOS底层/多线程/NSThread3.png)
+ ![NSThread3](../多线程/NSThread3.png)
 
 - 如果CPU现在调度当前线程对象，则当前线程对象进入运行状态，如果CPU调度其他线程对象，则当前线程对象回到就绪状态。
 - 如果CPU在运行当前线程对象的时候调用了sleep方法\等待同步锁，则当前线程对象就进入了阻塞状态，等到sleep到时\得到同步锁，则回到就绪状态。
 - 如果CPU在运行当前线程对象的时候线程任务执行完毕\异常强制退出，则当前线程对象进入死亡状态。
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
